@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#08090d" />
+  <title>SoulFlame AR Wear</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">SOULFLAME LABS</p>
+        <h1>AR Wear</h1>
+      </div>
+      <span class="status"><i></i> Prototype v0.1</span>
+    </header>
+
+    <section class="viewer-card">
+      <canvas id="scene" aria-label="3D визуализация на тениска"></canvas>
+      <div class="viewer-overlay">
+        <span>Завърти с пръст</span>
+        <button id="resetView" type="button">Нулирай</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">BODY TWIN</p>
+          <h2>Твоите параметри</h2>
+        </div>
+        <strong id="fitScore">92%</strong>
+      </div>
+
+      <div class="grid">
+        <label>Ръст <input id="height" type="number" min="140" max="220" value="178" /><span>см</span></label>
+        <label>Тегло <input id="weight" type="number" min="40" max="200" value="78" /><span>кг</span></label>
+        <label>Гърди <input id="chest" type="number" min="70" max="160" value="102" /><span>см</span></label>
+        <label>Талия <input id="waist" type="number" min="55" max="160" value="88" /><span>см</span></label>
+      </div>
+
+      <div class="size-block">
+        <span>Размер</span>
+        <div id="sizePicker" class="sizes" role="group" aria-label="Избор на размер">
+          <button data-size="XS" type="button">XS</button>
+          <button data-size="S" type="button">S</button>
+          <button data-size="M" type="button">M</button>
+          <button data-size="L" class="active" type="button">L</button>
+          <button data-size="XL" type="button">XL</button>
+          <button data-size="XXL" type="button">XXL</button>
+        </div>
+      </div>
+
+      <div class="fit-result">
+        <div>
+          <span>Препоръчан размер</span>
+          <strong id="recommendedSize">L</strong>
+        </div>
+        <p id="fitMessage">Добро прилягане в гърдите и леко свободно около талията.</p>
+      </div>
+
+      <div class="actions">
+        <label class="upload-btn">
+          <input id="modelUpload" type="file" accept=".glb,.gltf" />
+          Качи 3D дреха
+        </label>
+        <button id="cameraMode" class="primary" type="button">AR камера</button>
+      </div>
+      <p id="notice" class="notice">Камерата и body tracking ще бъдат активирани в следващата версия.</p>
+    </section>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
