@@ -1,0 +1,10 @@
+{
+  "name": "SoulFlame AR Wear",
+  "short_name": "AR Wear",
+  "description": "Body Twin и виртуално пробване на дрехи",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#06070a",
+  "theme_color": "#08090d",
+  "orientation": "portrait-primary"
+}
