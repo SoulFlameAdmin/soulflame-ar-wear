@@ -2,76 +2,82 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#08090d" />
-  <title>SoulFlame AR Wear</title>
+  <meta name="description" content="SoulFlame AR Wear — Body Twin и виртуално пробване на дрехи" />
+  <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./styles.css" />
+  <title>SoulFlame AR Wear</title>
 </head>
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <div>
-        <p class="eyebrow">SOULFLAME LABS</p>
-        <h1>AR Wear</h1>
-      </div>
-      <span class="status"><i></i> Prototype v0.1</span>
+      <div><p class="eyebrow">SOULFLAME LABS</p><h1>AR Wear</h1></div>
+      <div class="head-actions"><span class="status"><i></i> v0.2</span><button id="installBtn" class="icon-btn" hidden>Инсталирай</button></div>
     </header>
 
+    <nav class="mode-tabs" aria-label="Режим">
+      <button class="active" data-mode="studio">3D Studio</button>
+      <button data-mode="camera">AR Camera</button>
+    </nav>
+
     <section class="viewer-card">
-      <canvas id="scene" aria-label="3D визуализация на тениска"></canvas>
-      <div class="viewer-overlay">
-        <span>Завърти с пръст</span>
-        <button id="resetView" type="button">Нулирай</button>
+      <canvas id="scene" aria-label="3D визуализация на дреха"></canvas>
+      <video id="cameraFeed" playsinline muted></video>
+      <div id="bodyGuide" class="body-guide" hidden><div class="guide-head"></div><div class="guide-body"></div><p>Застани цял в рамката</p></div>
+      <div class="viewer-top">
+        <span id="viewerBadge">BODY TWIN</span>
+        <button id="autoRotate" type="button">360°</button>
       </div>
+      <div class="viewer-overlay">
+        <span id="viewerHint">Завърти с пръст · приближи с два пръста</span>
+        <div><button id="frontView">Отпред</button><button id="sideView">Отстрани</button><button id="resetView">Нулирай</button></div>
+      </div>
+    </section>
+
+    <section class="quick-stats">
+      <article><span>Прилягане</span><strong id="fitScore">92%</strong></article>
+      <article><span>Препоръка</span><strong id="recommendedSize">L</strong></article>
+      <article><span>Свобода</span><strong id="easeValue">6 см</strong></article>
     </section>
 
     <section class="panel">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">BODY TWIN</p>
-          <h2>Твоите параметри</h2>
-        </div>
-        <strong id="fitScore">92%</strong>
+      <div class="section-head"><div><p class="eyebrow">BODY TWIN</p><h2>Размери на тялото</h2></div><button id="saveProfile" class="text-btn">Запази</button></div>
+      <div class="grid measurements">
+        <label>Ръст <input id="height" type="number" min="140" max="220" value="178"><span>см</span></label>
+        <label>Тегло <input id="weight" type="number" min="40" max="200" value="78"><span>кг</span></label>
+        <label>Гърди <input id="chest" type="number" min="70" max="160" value="102"><span>см</span></label>
+        <label>Талия <input id="waist" type="number" min="55" max="160" value="88"><span>см</span></label>
+        <label>Ханш <input id="hips" type="number" min="70" max="170" value="100"><span>см</span></label>
+        <label>Рамене <input id="shoulders" type="number" min="34" max="65" value="47"><span>см</span></label>
       </div>
-
-      <div class="grid">
-        <label>Ръст <input id="height" type="number" min="140" max="220" value="178" /><span>см</span></label>
-        <label>Тегло <input id="weight" type="number" min="40" max="200" value="78" /><span>кг</span></label>
-        <label>Гърди <input id="chest" type="number" min="70" max="160" value="102" /><span>см</span></label>
-        <label>Талия <input id="waist" type="number" min="55" max="160" value="88" /><span>см</span></label>
-      </div>
-
-      <div class="size-block">
-        <span>Размер</span>
-        <div id="sizePicker" class="sizes" role="group" aria-label="Избор на размер">
-          <button data-size="XS" type="button">XS</button>
-          <button data-size="S" type="button">S</button>
-          <button data-size="M" type="button">M</button>
-          <button data-size="L" class="active" type="button">L</button>
-          <button data-size="XL" type="button">XL</button>
-          <button data-size="XXL" type="button">XXL</button>
-        </div>
-      </div>
-
-      <div class="fit-result">
-        <div>
-          <span>Препоръчан размер</span>
-          <strong id="recommendedSize">L</strong>
-        </div>
-        <p id="fitMessage">Добро прилягане в гърдите и леко свободно около талията.</p>
-      </div>
-
-      <div class="actions">
-        <label class="upload-btn">
-          <input id="modelUpload" type="file" accept=".glb,.gltf" />
-          Качи 3D дреха
-        </label>
-        <button id="cameraMode" class="primary" type="button">AR камера</button>
-      </div>
-      <p id="notice" class="notice">Камерата и body tracking ще бъдат активирани в следващата версия.</p>
+      <div class="range-row"><label for="bodyShape">Форма на тялото</label><input id="bodyShape" type="range" min="-20" max="20" value="0"><span id="shapeLabel">Баланс</span></div>
     </section>
-  </main>
 
+    <section class="panel">
+      <div class="section-head"><div><p class="eyebrow">GARMENT LAB</p><h2>Дреха и материя</h2></div><span id="garmentName" class="chip">T-Shirt 01</span></div>
+      <div class="size-block"><span>Размер</span><div id="sizePicker" class="sizes">
+        <button data-size="XS">XS</button><button data-size="S">S</button><button data-size="M">M</button><button data-size="L" class="active">L</button><button data-size="XL">XL</button><button data-size="XXL">XXL</button>
+      </div></div>
+      <div class="controls-grid">
+        <label>Материя<select id="fabric"><option value="cotton">Памук</option><option value="denim">Деним</option><option value="silk">Коприна</option><option value="leather">Кожа</option><option value="sport">Спортна</option></select></label>
+        <label>Кройка<select id="fitType"><option value="regular">Regular</option><option value="slim">Slim</option><option value="oversize">Oversize</option></select></label>
+      </div>
+      <div class="color-row"><span>Цвят</span><div id="colorPicker">
+        <button data-color="#171922" class="active" aria-label="Черен"></button><button data-color="#f0f0ec" aria-label="Бял"></button><button data-color="#b7262e" aria-label="Червен"></button><button data-color="#2356a8" aria-label="Син"></button><button data-color="#5f7c45" aria-label="Зелен"></button><button data-color="#b9a56b" aria-label="Бежов"></button>
+      </div></div>
+      <div class="fit-result"><div><span>AI Fit анализ</span><strong id="fitTitle">Много добро</strong></div><p id="fitMessage">Добро прилягане и балансирана свобода на движение.</p></div>
+      <div class="actions">
+        <label class="upload-btn"><input id="modelUpload" type="file" accept=".glb,.gltf">Качи GLB/GLTF</label>
+        <button id="cameraMode" class="primary">Пробвай с камера</button>
+      </div>
+      <p id="notice" class="notice">Профилът и настройките се пазят само на това устройство.</p>
+    </section>
+
+    <section class="panel roadmap"><p class="eyebrow">UPGRADE x20</p><h2>Активирано във v0.2</h2><div class="feature-grid">
+      <span>✓ PWA install</span><span>✓ Camera preview</span><span>✓ Body morph</span><span>✓ 6 измервания</span><span>✓ XS–XXL</span><span>✓ AI fit score</span><span>✓ 5 материи</span><span>✓ 3 кройки</span><span>✓ 6 цвята</span><span>✓ GLB upload</span><span>✓ 360° режим</span><span>✓ профил в телефона</span>
+    </div></section>
+  </main>
   <script type="module" src="./app.js"></script>
 </body>
 </html>
