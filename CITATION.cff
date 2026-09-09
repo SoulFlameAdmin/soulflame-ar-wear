@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you reference SoulFlame AR Wear, please cite the project and its creator."
+title: "SoulFlame AR Wear"
+type: software
+authors:
+  - family-names: "Lambov"
+    given-names: "Dimitar Veselinov"
+url: "https://soulflame-twins.vercel.app/founder/dimitar-veselinov-lambov/"
+repository-code: "https://github.com/SoulFlameAdmin/soulflame-ar-wear"
+abstract: "SoulFlame AR Wear is an augmented-reality wearable project associated with the SoulFlame ecosystem created by Dimitar Veselinov Lambov (Димитър Веселинов Ламбов)."
